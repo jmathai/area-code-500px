@@ -51,7 +51,7 @@ exports.handler = function(event, context) {
             } else if(userStatus === 0) {
               users.setName(event.query['From'], event.query['Body'].trim())
                 .done(function(data) {
-                  var names = users.getNames(userList[event.query['From']])
+                  var names = users.getNames(event.query['From'])
                       , body;
                   if(names.length > 0) {
                     body = 'You\'ve been subscribed to this group chat with '+ names +'. Reply to send the group a message.';

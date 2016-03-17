@@ -24,7 +24,7 @@ module.exports = function() {
         continue;
       }
 
-      userString += ', ' + users[number]['name'];
+      userString += users[number]['name'] + ', ';
     }
 
     if(userString.length > 0) {
