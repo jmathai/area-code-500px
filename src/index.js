@@ -41,18 +41,18 @@ exports.handler = function(event, context) {
           if(event.query['Body'].toLowerCase().trim() === 'join') {
             users.join(event.query['From'])
               .done(function(data) {
-                client.send(event.query['From'], 'Thanks. Please reply with your name.', response);
+                client.send(event.query['From'], 'Thanks. Please reply with your name.', null);
               });
             return;
           }  else if(event.query['Body'].toLowerCase().trim() === 'leave') {
             users.leave(event.query['From'])
               .done(function(data) {
-                client.send(event.query['From'], 'You\'ve left this group. Reply with "join" to join it again.', response);
+                client.send(event.query['From'], 'You\'ve left this group. Reply with "join" to join it again.', null);
                 client.sendToEveryoneExcept(userList, event.query['From'], ' just left.', '***');
               });
           } else {
             if(userStatus === -1) {
-              client.send(event.query['From'], 'Please subscribe by texting "join" to this number.', response);
+              client.send(event.query['From'], 'Please subscribe by texting "join" to this number.', null);
               return;
             } else if(userStatus === 0) {
               users.setName(event.query['From'], event.query['Body'].trim())

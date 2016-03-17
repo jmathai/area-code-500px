@@ -43,6 +43,7 @@ module.exports = function() {
   };
 
   this.join = function(number) {
+    var tmpUsers = users;
     if(typeof(users) === 'undefined') {
       return;
     }
@@ -53,8 +54,9 @@ module.exports = function() {
   };
 
   this.leave = function(number) {
-    delete users[number];
-    return db.set(usersKey, users);
+    var tempUsers = JSON.parse(JSON.stringify(users));
+    delete tempUsers[number];
+    return db.set(usersKey, tempUsers);
   };
 
   this.reset = function() {
