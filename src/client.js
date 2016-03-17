@@ -47,12 +47,20 @@ module.exports = function() {
   };
 
   this.sendToEveryoneExcept = function(users, except, body) {
+    var surround = arguments[3] || null
+        , newBody = this.constructBody(users[except], body);
+
+    if(surround !== null) {
+      newBody = surround + ' ' + newBody + ' ' + surround;
+    }
+
     for(var number in users) {
       if(number == except) {
         console.log('Skipping ' + number);
         continue;
       }
-      this.send(number, this.constructBody(users[except], body), null);
+
+      this.send(number, newBody, null);
     }
   };
 };

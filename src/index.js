@@ -59,7 +59,7 @@ exports.handler = function(event, context) {
                     body = 'You\'re the first one to join. We\'ll let you know when others join so you can send a message to the group.'
                   }
                   client.send(event.query['From'], body, null);
-                  client.sendToEveryoneExcept(userList, event.query['From'], ' just joined. // info');
+                  client.sendToEveryoneExcept(userList, event.query['From'], ' just joined.', '***');
                 });
             } else if(userStatus === 1 && event.query['Body'].trim().length > 0) {
               client.sendToEveryoneExcept(userList, event.query['From'], event.query['Body']);
