@@ -18,20 +18,20 @@ module.exports = function() {
 
   this.getNames = function() {
     var except = arguments[1] || null,
-        users = '';
+        userString = '';
     for(var number in users) {
       if(number == except) {
         continue;
       }
 
-      users += ', ' + users[number];
+      userString += ', ' + users[number];
     }
 
-    if(users.length > 0) {
-      users = users.substring(0, users.length-2);
+    if(userString.length > 0) {
+      userString = userString.substring(0, userString.length-2);
     }
 
-    return users;
+    return userString;
   };
 
   this.init = function() {
