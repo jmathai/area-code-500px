@@ -1,0 +1,15 @@
+{
+  "env": {
+    "FROM": "your_twilio_number",
+    "TWILIO_ACCOUNT_SID": "your_twilio_account_sid",
+    "TWILIO_AUTH_TOKEN": "your_twilio_auth_token"
+  },
+  "events": {
+    "POST": {
+      "/user/joule": [
+        {"to":"your_cell_number","body":"test"},
+        {"to":"","body":"invalid"}
+      ]
+    }
+  }
+}

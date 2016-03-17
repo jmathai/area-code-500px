@@ -1,0 +1,22 @@
+version: 0.0.1
+language: 'nodejs'
+environment_variables:
+  - TWILIO_ACCOUNT_SID
+  - TWILIO_AUTH_TOKEN
+  - FROM
+methods:
+  GET:
+    status_codes:
+      - 200 # Can only have one 2xx status code and it must be first in the list
+      - 400
+      - 401
+      - 404
+      - 409
+      - 500
+    query_string_params:
+      - body
+      - to
+
+# path params
+# all required must come before optional
+# only one optional allowed
