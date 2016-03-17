@@ -48,7 +48,13 @@ module.exports = function() {
 
   this.sendToEveryoneExcept = function(users, except, body) {
     var surround = arguments[3] || null
-        , newBody = this.constructBody(users[except], body);
+        , newBody;
+    
+    if(except !== null && typeof(users[except]) !== 'undefined') {
+      newBody = this.constructBody(users[except], body);
+    } else {
+      newBody = body;
+    }
 
     if(surround !== null) {
       newBody = surround + ' ' + newBody + ' ' + surround;
