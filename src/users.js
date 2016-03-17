@@ -42,6 +42,21 @@ module.exports = function() {
     users = u || {};
   };
 
+  this.join = function(number) {
+    if(typeof(users) === 'undefined') {
+      return;
+    }
+
+    users[number] = {};
+
+    return db.set(usersKey, users);
+  };
+
+  this.leave = function(number) {
+    delete users[number];
+    return db.set(usersKey, users);
+  };
+
   this.reset = function() {
     return db.set(usersKey, {});
   };
@@ -52,16 +67,6 @@ module.exports = function() {
     }
 
     users[number]['name'] = name;
-    return db.set(usersKey, users);
-  };
-
-  this.start = function(number) {
-    if(typeof(users) === 'undefined') {
-      return;
-    }
-
-    users[number] = {};
-
     return db.set(usersKey, users);
   };
 };
