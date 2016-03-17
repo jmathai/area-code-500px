@@ -17,7 +17,7 @@ module.exports = function() {
   };
 
   this.getNames = function() {
-    var except = arguments[1] || null,
+    var except = arguments[0] || null,
         userString = '';
     for(var number in users) {
       if(number == except) {
