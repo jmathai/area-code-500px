@@ -38,7 +38,7 @@ exports.handler = function(event, context) {
           // else we check if the user has a name
           //  if the user is regisered but does not have a name we assume the Body is the name and store it
           //  else if the user has a name we send the Body to the list
-          if(event.query['Body'].toLowerCase().trim() === 'start') {
+          if(event.query['Body'].toLowerCase().trim() === 'join') {
             users.start(event.query['From'])
               .done(function(data) {
                 client.send(event.query['From'], 'Thanks. Please reply with your name.', response);
