@@ -4,6 +4,7 @@
   "description": "Boilerplate template for creating joules.",
   "main": "index.js",
   "dependencies": {
+    "joule-node-database": "0.0.5",
     "joule-node-response": "<2.0.0",
     "twilio": "^2.9.0"
   },

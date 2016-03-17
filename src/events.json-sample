@@ -1,14 +1,19 @@
 {
   "env": {
     "FROM": "your_twilio_number",
-    "TWILIO_ACCOUNT_SID": "your_twilio_account_sid",
-    "TWILIO_AUTH_TOKEN": "your_twilio_auth_token"
+    "TWILIO_ACCOUNT_SID": "your_twilio_sid",
+    "TWILIO_AUTH_TOKEN": "your_twilio_token",
+    "DB_NAME": "joule-node-local-db",
+    "DB_PREFIX": "prefix",
+    "AWS_ACCESS_KEY_ID": "see_joule_website",
+    "AWS_SECRET_ACCESS_KEY": "see_joule_website"
   },
   "events": {
-    "POST": {
+    "GET": {
       "/user/joule": [
-        {"to":"your_cell_number","body":"test"},
-        {"to":"","body":"invalid"}
+        {"From":"1112223333","Body":"start"},
+        {"From":"1112223333","Body":"JohnDoe"},
+        {"From":"1112223333","Body":"Hello"}
       ]
     }
   }
