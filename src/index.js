@@ -45,7 +45,7 @@ exports.handler = function(event, context) {
               });
             return;
           }  else if(event.query['Body'].toLowerCase().trim() === 'leave') {
-            var leaveName = userList[event.query['From']];
+            var leaveName = userList[event.query['From']]['name'];
             users.leave(event.query['From'])
               .done(function(data) {
                 client.send(event.query['From'], 'You\'ve left this group. Reply with "join" to join it again.', null);
