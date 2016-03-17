@@ -63,7 +63,6 @@ exports.handler = function(event, context) {
                 }
                 client.send(number, client.constructBody(userList[event.query['From']], event.query['Body']), null);
               }
-              response.send(xmlResponse);
             }
           }
       }
