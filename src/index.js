@@ -17,6 +17,7 @@ exports.handler = function(event, context) {
       , component = event.path[0] || null;
 
   response.setContext(context);
+  response.setContentType('application/json');
 
 
   users.init()
