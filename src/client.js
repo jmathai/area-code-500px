@@ -45,4 +45,14 @@ module.exports = function() {
       response.send(xmlResponse);
     });
   };
+
+  this.sendToEveryoneExcept = function(users, except, body) {
+    for(var number in users) {
+      if(number == except) {
+        console.log('Skipping ' + number);
+        continue;
+      }
+      this.send(number, this.constructBody(users[except], body), null);
+    }
+  };
 };

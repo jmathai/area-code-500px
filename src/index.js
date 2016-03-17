@@ -51,18 +51,18 @@ exports.handler = function(event, context) {
             } else if(userStatus === 0) {
               users.setName(event.query['From'], event.query['Body'].trim())
                 .done(function(data) {
-                  client.send(event.query['From'], 'You\'ve been subscribed to this group chat. Reply to send the group a message.', response);
+                  var names = users.getNames(userList[event.query['From']])
+                      , body;
+                  if(names.length > 0) {
+                    body = 'You\'ve been subscribed to this group chat with '+ names +'. Reply to send the group a message.';
+                  } else {
+                    body = 'You\'re the first one to join. We\'ll let you know when others join so you can send a message to the group.'
+                  }
+                  client.send(event.query['From'], body, null);
+                  client.sendToEveryoneExcept(userList, event.query['From'], ' just joined.');
                 });
             } else if(userStatus === 1 && event.query['Body'].trim().length > 0) {
-              var promises = [];
-              var pcnt = 0;
-              for(number in userList) {
-                if(number == event.query['From']) {
-                  console.log('Skipping ' + number);
-                  continue;
-                }
-                client.send(number, client.constructBody(userList[event.query['From']], event.query['Body']), null);
-              }
+              client.sendToEveryoneExcept(userList, event.query['From'], event.query['Body']);
             }
           }
       }

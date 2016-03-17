@@ -16,6 +16,24 @@ module.exports = function() {
     return 1;
   };
 
+  this.getNames = function() {
+    var except = arguments[1] || null,
+        users = '';
+    for(var number in users) {
+      if(number == except) {
+        continue;
+      }
+
+      users += ', ' + users[number];
+    }
+
+    if(users.length > 0) {
+      users = users.substring(0, users.length-2);
+    }
+
+    return users;
+  };
+
   this.init = function() {
     return db.get(usersKey);
   };
