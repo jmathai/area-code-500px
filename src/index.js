@@ -48,7 +48,7 @@ exports.handler = function(event, context) {
             users.leave(event.query['From'])
               .done(function(data) {
                 client.send(event.query['From'], 'You\'ve left this group. Reply with "join" to join it again.', null);
-                client.sendToEveryoneExcept(data, null, ' just left.', '***');
+                client.sendToEveryoneExcept(userList, event.query['From'], ' just left.', '***');
               });
           } else {
             if(userStatus === -1) {
