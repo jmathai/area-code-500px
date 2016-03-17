@@ -10,6 +10,7 @@
  * DO NOT INCLUDE SECRETS INTO THIS REPOSITORY.
  */
 var client = require('twilio')();
+var xmlResponse = '<?xml version="1.0" encoding="UTF-8"?> <Response> <Hangup/> </Response>';
 
 module.exports = function() {
   this.constructBody = function(user, body) {
@@ -34,14 +35,14 @@ module.exports = function() {
        */
       if(err) {
         response.setHttpStatusCode(400);
-        response.send({error: err});
+        response.send(xmlResponse);
         return;
       } else if(message && message.sid) {
-        response.send({messageSid: message.sid});
+        response.send(xmlResponse);
         return;
       }
       response.setHttpStatusCode(500);
-      response.send({error: 'unknown'});
+      response.send(xmlResponse);
     });
   };
 };

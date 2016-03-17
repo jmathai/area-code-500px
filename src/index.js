@@ -9,6 +9,7 @@
 var Response = require('joule-node-response');
 var Users = require('./users');
 var Client = require('./client');
+var xmlResponse = '<?xml version="1.0" encoding="UTF-8"?> <Response> <Hangup/> </Response>';
 
 exports.handler = function(event, context) {
   var response = new Response()
@@ -17,7 +18,7 @@ exports.handler = function(event, context) {
       , component = event.path[0] || null;
 
   response.setContext(context);
-  response.setContentType('application/json');
+  response.setContentType('application/xml');
 
 
   users.init()
@@ -29,7 +30,7 @@ exports.handler = function(event, context) {
         case 'reset':
           users.reset()
             .done(function(data) {
-              response.send('Reset');
+              response.send(xmlResponse);
             });
           break;
         default:
@@ -62,7 +63,7 @@ exports.handler = function(event, context) {
                 }
                 client.send(number, client.constructBody(userList[event.query['From']], event.query['Body']), null);
               }
-              response.send('Finished');
+              response.send(xmlResponse);
             }
           }
       }
