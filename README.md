@@ -1,22 +1,15 @@
 # Twilio Boilerplate Joule
 
+[![Run on Joule](https://joule.run/static/images/run-on-joule.png)](https://joule.run/joule/create/jmathai/twilio-group-text)
 
-This is a boilerplate Joule that can act as a starting point for creating Joules which use Twilio's API.
+Group Text Message Chat Channel Using Twilio
+This Joule is an out-of-the box group text message chat channel app which can be easily set up with your Twilio account.
 
-[Create this Joule](https://joule.run/joule/create/joulehq/joule-node-twilio-boilerplate)
+Give your Twilio number to anyone you'd like to join and they'll be able to join or leave at their discretion. Upon joining the chat everyone will receive a welcome message with a list of everyone already in the chat. Anytime someone new joins or someone leaves a message is sent to the group as well.
 
-## Configure your Joule
+As the administrator you'll have the ability to ban someone from the channel. You'll also be able to deactivate and reactivate the room at any time.
 
-The `.joule.yml` file already includes the 3 environment variables you'll need to use Twilio's API. This lets you securely use your Twilio secrets without having to check them into your repository.
-
-* TWILIO_ACCOUNT_SID, Your Twilio account sid.
-* TWILIO_AUTH_TOKEN, Your Twilio account auth token.
-* FROM, Your Twilio phone number (1XXXXXXXXXX).
-
-## Call your Joule
-
-Calling your Joule is simple. When viewing your Joule you will see instructions on how to call your API.
-
-## Update your Joule
-
-Your Joule is automatically updated each time you push to your master branch on GitHub.
+What you'll need
+* A Twilio Account (you can set this up later)
+* A text message capable cell phone
+* Friends
