@@ -1,6 +1,6 @@
-# Twilio Boilerplate Joule
+# Group Text Message Chat Channel Using Twilio
 
-[![Run on Joule](https://joule.run/static/images/run-on-joule.png)](https://joule.run/joule/create/jmathai/twilio-group-text)
+[![Run on Joule](https://joule.run/static/images/run-on-joule.png)](https://joule.run/joule/create/joulehq/joule-node-twilio-group-text)
 
 Group Text Message Chat Channel Using Twilio
 This Joule is an out-of-the box group text message chat channel app which can be easily set up with your Twilio account.
