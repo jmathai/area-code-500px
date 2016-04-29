@@ -54,10 +54,10 @@ exports.handler = function(event, context) {
 
           photos = client500Px.photos.searchByTerm(cityName, {image_size:'1600', rpp: '1', only: 'City and Architecture,Landscape'})
                     .catch(function() {
-                      response.send({imageUrl: imageUrl, imageTitle: imageTitle, imageLink: imageLink});
+                      //jouleResponse.send({imageUrl: imageUrl, imageTitle: imageTitle, imageLink: imageLink});
                     })
                     .then(function(response) {
-                      if(response['photos'].length > 0) {
+                      if(response && response['photos'].length > 0) {
                         imageUrl = response['photos'][0]['image_url'];
                         imageTitle = response['photos'][0]['description'] || response['photos'][0]['user']['fullname'];
                         imageLink = 'https://500px.com' + response['photos'][0]['url'];
