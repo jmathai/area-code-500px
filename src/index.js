@@ -9,70 +9,64 @@
 var Response = require('joule-node-response');
 var Users = require('./users');
 var Client = require('./client');
+var Client500Px = require('600px');
+var request = require('request');
+var cheerio = require('cheerio');
 var xmlResponse = '<?xml version="1.0" encoding="UTF-8"?> <Response> <Hangup/> </Response>';
 
+
 exports.handler = function(event, context) {
-  var response = new Response()
+  var jouleResponse = new Response()
       , client = new Client()
       , users = new Users()
-      , component = event.path[0] || null;
+      , component = event.path[0] || null
+      , client500Px = new Client500Px({
+        consumer_key: process.env.PX_KEY,
+        consumer_secret: process.env.PX_SECRET,
+        token: process.env.PX_USER_TOKEN,
+        token_secret: process.env.PX_USER_SECRET
+      });
 
-  response.setContext(context);
-  response.setContentType('application/xml');
-
-
-  users.init()
-    .done(function(userList) {
-      users.initUsers(userList);
-      var userStatus = users.getUserStatus(event.query['From']);
-
-      switch(component) {
-        case 'reset':
-          users.reset()
-            .done(function(data) {
-              response.send(xmlResponse);
-            });
-          break;
-        default:
-          // if the body is "start" we register the user
-          // else we check if the user has a name
-          //  if the user is regisered but does not have a name we assume the Body is the name and store it
-          //  else if the user has a name we send the Body to the list
-          if(event.query['Body'].toLowerCase().trim() === 'join') {
-            users.join(event.query['From'])
-              .done(function(data) {
-                client.send(event.query['From'], 'Thanks. Please reply with your name.', null);
-              });
-            return;
-          }  else if(event.query['Body'].toLowerCase().trim() === 'leave') {
-            var leaveName = userList[event.query['From']]['name'];
-            users.leave(event.query['From'])
-              .done(function(data) {
-                client.send(event.query['From'], 'You\'ve left this group. Reply with "join" to join it again.', null);
-                client.sendToEveryoneExcept(userList, null, leaveName + ' just left.', '***');
-              });
-          } else {
-            if(userStatus === -1) {
-              client.send(event.query['From'], 'Please subscribe by texting "join" to this number.', null);
-              return;
-            } else if(userStatus === 0) {
-              users.setName(event.query['From'], event.query['Body'].trim())
-                .done(function(data) {
-                  var names = users.getNames(event.query['From'])
-                      , body;
-                  if(names.length > 0) {
-                    body = 'You\'ve joined this group chat with '+ names +'. Reply to send the group a message.';
-                  } else {
-                    body = 'You\'re the first one to join. We\'ll let you know when others join so you can send a message to the group.'
-                  }
-                  body += ' Reply "leave" if you wish to leave.';
-                  client.send(event.query['From'], body, null);
-                  client.sendToEveryoneExcept(userList, event.query['From'], ' just joined.', '***');
-                });
-            } else if(userStatus === 1 && event.query['Body'].trim().length > 0) {
-              client.sendToEveryoneExcept(userList, event.query['From'], event.query['Body']);
-            }
+  jouleResponse.setContext(context);
+  jouleResponse.setContentType('application/json');
+  
+  if(component === 'lookup') {
+    //curl -XGET "https://lookups.twilio.com/v1/PhoneNumbers/5108675309?CountryCode=US&Type=carrier" \
+    // -u '{AccountSid}:{AuthToken}'
+    request(
+      'https://www.google.com/search?q=area+code+'+event.query['number']+'&aqs=chrome..69i64j0l5.7855j0j7&sourceid=chrome&ie=UTF-8'
+      , {
+          auth: {
+            user: process.env.TWILIO_ACCOUNT_SID
+            , pass: process.env.TWILIO_AUTH_TOKEN
           }
       }
-    });
+      , function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+          var doc = cheerio.load(body)
+              //, city = doc('h2');
+              , city = doc('._Oqb')
+              , cityName = city.text() || 'San Francisco'
+              , imageUrl = 'https://drscdn.500px.org/photo/6361557/m%3D1600_k%3D1_a%3D1/7cd606b858a17da669e55d57c4b3304a'
+              , imageTitle = 'Volker Handke'
+              , imageLink = 'https://500px.com/photo/6361557/new-york-by-volker-handke'
+              , photos;
+
+          photos = client500Px.photos.searchByTerm(cityName, {image_size:'1600', rpp: '1', only: 'City and Architecture,Landscape'})
+                    .catch(function() {
+                      response.send({imageUrl: imageUrl, imageTitle: imageTitle, imageLink: imageLink});
+                    })
+                    .then(function(response) {
+                      if(response['photos'].length > 0) {
+                        imageUrl = response['photos'][0]['image_url'];
+                        imageTitle = response['photos'][0]['description'] || response['photos'][0]['user']['fullname'];
+                        imageLink = 'https://500px.com' + response['photos'][0]['url'];
+                      }
+
+                      jouleResponse.send({imageUrl: imageUrl, imageTitle: imageTitle, imageLink: imageLink});
+                    });
+        }
+      }
+    );
+  }
 };

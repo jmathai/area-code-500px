@@ -4,8 +4,11 @@
   "description": "Boilerplate template for creating joules.",
   "main": "index.js",
   "dependencies": {
-    "joule-node-database": "0.0.5",
+    "600px": "0.0.1",
+    "cheerio": "^0.20.0",
+    "joule-node-database": "<2.0.0",
     "joule-node-response": "<2.0.0",
+    "request": "^2.72.0",
     "twilio": "^2.9.0"
   },
   "scripts": {
