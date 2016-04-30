@@ -64,7 +64,7 @@ exports.handler = function(event, context) {
                         imageLink = 'https://500px.com' + response['photos'][0]['url'];
                       }
 
-                      jouleResponse.send({imageUrl: imageUrl, imageTitle: imageTitle, imageLink: imageLink});
+                      jouleResponse.send({cityName: cityName, imageUrl: imageUrl, imageTitle: imageTitle, imageLink: imageLink});
                     });
         }
       }
