@@ -28,6 +28,7 @@ exports.handler = function(event, context) {
       });
 
   jouleResponse.setContext(context);
+  jouleResponse.setHeader('Access-Control-Allow-Origin', '*');
   jouleResponse.setContentType('application/json');
   
   if(component === 'lookup') {
