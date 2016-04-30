@@ -92,7 +92,7 @@ exports.handler = function(event, context) {
         break;
       case 'webhook':
         jouleResponse.setContentType('application/xml');
-        var fromNumber = event.query['From']
+        var fromNumber = event.query['From'].replace('+','')
             , userStatus = users.getUserStatus(event.query['From']);
         
         if(!fromNumber) {

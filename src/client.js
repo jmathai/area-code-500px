@@ -10,7 +10,7 @@
  * DO NOT INCLUDE SECRETS INTO THIS REPOSITORY.
  */
 var client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
-var xmlResponse = '<?xml version="1.0" encoding="UTF-8"?> <Response> <Hangup/> </Response>';
+var xmlResponse = '<?xml version="1.0" encoding="UTF-8"?> <Response></Response>';
 
 module.exports = function() {
   this.send = function(to, body, response, data) {
