@@ -25,6 +25,7 @@ exports.handler = function(event, context) {
         token: process.env.PX_USER_TOKEN,
         token_secret: process.env.PX_USER_SECRET
       });
+  console.log(event);
 
   jouleResponse.setContext(context);
   jouleResponse.setHeader('Access-Control-Allow-Origin', '*');
@@ -93,7 +94,7 @@ exports.handler = function(event, context) {
       case 'webhook':
         jouleResponse.setContentType('application/xml');
         var fromNumber = event.query['From'].replace('+','')
-            , userStatus = users.getUserStatus(event.query['From']);
+            , userStatus = users.getUserStatus(fromNumber);
         
         if(!fromNumber) {
           jouleResponse.setHttpStatusCode(400);
