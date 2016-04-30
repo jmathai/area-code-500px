@@ -104,7 +104,7 @@ exports.handler = function(event, context) {
         } else if(userStatus === 0) {
           users.setName(fromNumber, event.query['Body'])
           .done(function(usersList) {
-            client.send(fromNumber, 'Thanks ' + event.query['Body'] + '. We\'ve customized the resume for you.', jouleResponse, 'xml');
+            client.send(fromNumber, 'Thanks ' + event.query['Body'] + '. We\'re customizing the resume for you.', jouleResponse, 'xml');
           });
         }
         break;
