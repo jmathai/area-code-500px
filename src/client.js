@@ -28,7 +28,11 @@ module.exports = function() {
         response.setHttpStatusCode(400);
       }
 
-      response.send(data);
+      if(data === 'xml') {
+        response.send(xmlResponse);
+      } else {
+        response.send(data);
+      }
     });
   };
 };

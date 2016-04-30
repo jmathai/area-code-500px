@@ -99,11 +99,11 @@ exports.handler = function(event, context) {
           jouleResponse.setHttpStatusCode(400);
           jouleResponse.send('<ihatexml>Invalid number</ihatexml');
         } else if(userStatus === -1) {
-          client.send(fromNumber, 'Please visit ' + process.env.WEBSITE_URL + ' for instructions on how to view this resume.', jouleResponse, {status: 'unregistered', number: fromNumber});
+          client.send(fromNumber, 'Please visit ' + process.env.WEBSITE_URL + ' for instructions on how to view this resume.', jouleResponse, 'xml');
         } else if(userStatus === 0) {
           users.setName(fromNumber, event.query['Body'])
           .done(function(usersList) {
-            client.send(fromNumber, 'Thanks ' + event.query['Body'] + '. We\'ve customized the resume for you.', jouleResponse, {status: 'customized', number: fromNumber});
+            client.send(fromNumber, 'Thanks ' + event.query['Body'] + '. We\'ve customized the resume for you.', jouleResponse, 'xml');
           });
         }
         break;
