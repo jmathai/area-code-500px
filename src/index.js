@@ -88,8 +88,7 @@ exports.handler = function(event, context) {
 
         users.register(fromNumber)
         .done(function(usersList) {
-          client.send(fromNumber, 'Hello. Please reply with your name so we can customize our resume for you.');
-          jouleResponse.send({status: 'registered', number: fromNumber});
+          client.send(fromNumber, 'Hello. Please reply with your name so we can customize our resume for you.', jouleResponse, {status: 'registered', number: fromNumber});
         });
         break;
       case 'webhook':
@@ -101,13 +100,11 @@ exports.handler = function(event, context) {
           jouleResponse.setHttpStatusCode(400);
           jouleResponse.send('<ihatexml>Invalid number</ihatexml');
         } else if(userStatus === -1) {
-          client.send(fromNumber, 'Please visit ' + process.env.WEBSITE_URL + ' for instructions on how to view this resume.');
-          jouleResponse.send({status: 'unregistered', number: fromNumber});
+          client.send(fromNumber, 'Please visit ' + process.env.WEBSITE_URL + ' for instructions on how to view this resume.', jouleResponse, {status: 'unregistered', number: fromNumber});
         } else if(userStatus === 0) {
           users.setName(fromNumber, event.query['Body'])
           .done(function(usersList) {
-            client.send(fromNumber, 'Thanks ' + event.query['Body'] + '. We\'ve customized the resume for you.');
-            jouleResponse.send({status: 'customized', number: fromNumber});
+            client.send(fromNumber, 'Thanks ' + event.query['Body'] + '. We\'ve customized the resume for you.', jouleResponse, {status: 'customized', number: fromNumber});
           });
         }
     }

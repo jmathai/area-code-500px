@@ -13,7 +13,7 @@ var client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILI
 var xmlResponse = '<?xml version="1.0" encoding="UTF-8"?> <Response> <Hangup/> </Response>';
 
 module.exports = function() {
-  this.send = function(to, body) {
+  this.send = function(to, body, response, data) {
     client.sendMessage({
       body: body,
       to: to,
@@ -25,7 +25,10 @@ module.exports = function() {
        */
       if(err) {
         console.log(err);
+        response.setHttpStatusCode(400);
       }
+
+      response.send(data);
     });
   };
 };
