@@ -16,6 +16,14 @@ module.exports = function() {
     return 1;
   };
 
+  this.getUser = function(number) {
+    if(typeof(users[number]) === 'undefined') {
+      return false;
+    }
+
+    return users[number];
+  };
+
   this.init = function() {
     return db.get(usersKey);
   };

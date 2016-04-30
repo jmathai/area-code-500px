@@ -76,7 +76,6 @@ exports.handler = function(event, context) {
       case 'register':
         jouleResponse.setContentType('application/json');
         var fromNumber = event.query['number'].replace(/[^0-9]/, '');
-        console.log(fromNumber.length);
 
         if(fromNumber.length < 10 || fromNumber.length > 11) {
           jouleResponse.setHttpStatusCode(400);
@@ -106,6 +105,18 @@ exports.handler = function(event, context) {
           .done(function(usersList) {
             client.send(fromNumber, 'Thanks ' + event.query['Body'] + '. We\'ve customized the resume for you.', jouleResponse, {status: 'customized', number: fromNumber});
           });
+        }
+        break;
+      case 'number':
+        var number = event.query['number']
+            , user = users.getUser(number);
+
+        jouleResponse.setContentType('application/json');
+        if(!user) {
+          jouleResponse.setHttpStatusCode(404);
+          jouleResponse.send({error: 'User not found'});
+        } else {
+          jouleResponse.send(user);
         }
     }
   });
