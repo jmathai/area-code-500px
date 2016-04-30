@@ -7,6 +7,7 @@ environment_variables:
   - PX_USER_SECRET
   - TWILIO_ACCOUNT_SID
   - TWILIO_AUTH_TOKEN
+  - WEBSITE_URL
   - FROM
 methods:
   GET:
