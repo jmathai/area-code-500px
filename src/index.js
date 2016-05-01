@@ -81,11 +81,13 @@ exports.handler = function(event, context) {
         getPhotoByCityName(event.query['cityName'], jouleResponse);
         break;
       case 'iplookup':
+        var ipAddress = event['query']['ip'] || event.remoteAddr;
         jouleResponse.setContentType('application/json');
         request(
-          'http://ip-api.com/json/'+event.remoteAddr
+          'http://ip-api.com/json/'+ipAddress
           , function (error, response, body) {
-            jouleResponse.send({city: response['city'], stage: response['regionName']});
+            var bodyJson = JSON.parse(body);
+            jouleResponse.send({city: bodyJson['city'], state: bodyJson['regionName']});
           }
         );
         break;
@@ -134,6 +136,7 @@ exports.handler = function(event, context) {
         } else {
           jouleResponse.send(user);
         }
+        break;
     }
   });
 };
