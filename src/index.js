@@ -74,6 +74,15 @@ exports.handler = function(event, context) {
           }
         );
         break;
+      case 'iplookup':
+        jouleResponse.setContentType('application/json');
+        request(
+          'http://ip-api.com/json/'+event.remoteAddr
+          , function (error, response, body) {
+            jouleResponse.send({city: body['city'], stage: body['regionName']});
+          }
+        );
+        break;
       case 'register':
         jouleResponse.setContentType('application/json');
         var fromNumber = event.query['number'].replace(/[^0-9]/, '');
