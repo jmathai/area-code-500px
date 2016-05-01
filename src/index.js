@@ -85,7 +85,7 @@ exports.handler = function(event, context) {
         request(
           'http://ip-api.com/json/'+event.remoteAddr
           , function (error, response, body) {
-            jouleResponse.send({city: body['city'], stage: body['regionName']});
+            jouleResponse.send({city: response['city'], stage: response['regionName']});
           }
         );
         break;
