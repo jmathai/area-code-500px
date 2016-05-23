@@ -60,12 +60,6 @@ exports.handler = function(event, context) {
         jouleResponse.setContentType('application/json');
         request(
           'https://www.google.com/search?q=area+code+'+event.query['number']+'&aqs=chrome..69i64j0l5.7855j0j7&sourceid=chrome&ie=UTF-8'
-          , {
-              auth: {
-                user: process.env.TWILIO_ACCOUNT_SID
-                , pass: process.env.TWILIO_AUTH_TOKEN
-              }
-          }
           , function (error, response, body) {
             if (!error && response.statusCode == 200) {
               var doc = cheerio.load(body)
